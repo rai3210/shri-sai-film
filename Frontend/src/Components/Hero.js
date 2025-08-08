@@ -1,14 +1,13 @@
-import React from 'react';
-import { Star, TrendingUp, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, TrendingUp, Users, X, Film } from 'lucide-react';
 
 const Hero = () => {
-  const handleStartPromotion = () => {
-    alert('Welcome to Shri Sai Film Creative! Our promotion specialist will contact you within 2 hours to discuss your project and create a customized marketing strategy.');
-  };
-
-  const handleViewPortfolio = () => {
-    document.getElementById('latest-releases')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [modalContent, setModalContent] = useState('');
+  const showModal = (content) => { setModalContent(content); };
+  const hideModal = () => { setModalContent(''); };
+  
+  const handleStartPromotion = () => { showModal('Welcome to Shri Sai Film Creative! Our promotion specialist will contact you within 2 hours to discuss your project and create a customized marketing strategy.'); };
+  const handleViewPortfolio = () => { document.getElementById('latest-releases')?.scrollIntoView({ behavior: 'smooth' }); };
 
   return (
     <section id="home" className="pt-16 bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white">
@@ -77,6 +76,17 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      {modalContent && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl p-8 shadow-2xl max-w-md w-full relative">
+            <button onClick={hideModal} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><X size={24} /></button>
+            <p className="text-gray-800 text-lg text-center">{modalContent}</p>
+            <div className="mt-6 flex justify-center">
+              <button onClick={hideModal} className="bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
